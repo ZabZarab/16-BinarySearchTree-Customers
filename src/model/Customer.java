@@ -46,5 +46,6 @@ public class Customer{
         this.sales = newSales;
     }
 
-    //TODO 02: Überarbeite die Klasse so, dass sie in einem BinarySearchTree verwaltet werden kann. Kannst du auch ihre Darstellung im Baum effizient überarbeiten?
+    //TODO 02a: Überarbeite die Klasse so, dass sie in einem BinarySearchTree verwaltet werden kann. 
+    //TODO 02b: Die Darstellung eines Objekt in der View ist nicht hübsch. Überlage die toString-Methode und mache die Ausgabe "schöner".
 }
