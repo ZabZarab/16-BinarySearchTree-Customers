@@ -203,7 +203,7 @@ public class BinarySearchTree<ContentType extends ComparableContent<ContentType>
 	 * 
 	 */
 	public ContentType search(ContentType pContent) {
-		//TODO 03: Implementierte den Algorithmus zum Suchen eines Objekts.
+		//TODO 03: Implementiere den Algorithmus zum Suchen eines Objekts.
 		return null;
 	}
 
