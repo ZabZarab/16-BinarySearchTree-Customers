@@ -92,6 +92,33 @@ public class BinarySearchTree<ContentType extends ComparableContent<ContentType>
 	 */
 	public void insert(ContentType pContent) {
 		//TODO 01: Implementiere den Algorithmus zum Einfügen eines neuen Objekts.
+		if(pContent != null){
+			if(isEmpty()){
+				this.node = new BSTNode<>(pContent);
+			}else{
+				if(pContent.isGreater(node.content)) {
+					if (getRightTree().isEmpty()) {
+						this.getRightTree().insert(pContent);
+				}else if(pContent.isLess(node.content)){
+						this.getLeftTree().insert(pContent);
+					}
+				}
+			}
+		}
+	}
+
+	public void insertRecursive(ContentType pContent , BSTNode<ContentType> pNode){
+		if(pContent != null && !pContent.isEqual((pNode.content))){
+			if(pContent.isLess(pNode.content)){
+				if(pNode.left.isEmpty()) pNode.left.node.content = pContent;
+				else insertRecursive(pContent , pNode.left.node);
+			}else{
+				if(pNode.right.isEmpty()) pNode.right.node.content = pContent;
+				else insertRecursive(pContent , pNode.right.node);
+			}
+
+
+		}
 	}
 
 	/**
@@ -204,6 +231,11 @@ public class BinarySearchTree<ContentType extends ComparableContent<ContentType>
 	 */
 	public ContentType search(ContentType pContent) {
 		//TODO 03: Implementiere den Algorithmus zum Suchen eines Objekts.
+		if(pContent != null){
+			if(node.content.isEqual(pContent)) return node.content;
+			else if(node.content.isLess(pContent)) return getRightTree().search(pContent);
+			else return getLeftTree().search(pContent);
+			}
 		return null;
 	}
 
