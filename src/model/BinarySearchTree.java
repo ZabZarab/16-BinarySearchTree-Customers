@@ -231,7 +231,7 @@ public class BinarySearchTree<ContentType extends ComparableContent<ContentType>
 	 */
 	public ContentType search(ContentType pContent) {
 		//TODO 03: Implementiere den Algorithmus zum Suchen eines Objekts.
-		if(pContent != null){
+		if(pContent != null && !isEmpty()){
 			if(node.content.isEqual(pContent)) return node.content;
 			else if(node.content.isLess(pContent)) return getRightTree().search(pContent);
 			else return getLeftTree().search(pContent);
