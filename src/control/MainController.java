@@ -3,6 +3,7 @@ package control;
 
 import model.BinarySearchTree;
 import model.Customer;
+import model.List;
 import view.DrawingPanel;
 import view.treeView.TreeNode;
 import view.treeView.TreePath;
@@ -133,6 +134,7 @@ public class MainController {
         if(!current.isEmpty()){
             return sumUpSales(current.getLeftTree()) + current.getContent().getSales() + sumUpSales(current.getRightTree()) + current.getContent().getSales();
         }
+        return 0;
     }
 
     /**
@@ -202,13 +204,13 @@ public class MainController {
             search = tree.getContent();
         }
 
-        if(search == null && !tree.getLeftTree().isEmpty(){
+        if(search == null && !tree.getLeftTree().isEmpty()){
             search = searchSalesRec(tree.getLeftTree(), sales);
         }
         if(search == null && !tree.getRightTree().isEmpty()){
             search = searchSalesRec(tree.getRightTree(), sales);
         }
-        return search
+        return search;
     }
 
     /**
@@ -222,28 +224,48 @@ public class MainController {
     public String[][] listUpperNames(String name){
         //TODO 11: Halbwegs sinnvolle Verknüpfung verschiedener Datenstrukturen zur Übung.
 
-        String[][] output = new String[1][2];
+
+        List<Customer> allCustomer = creatList(customerTree);
+        List<Customer> higherCustomer = new List();
+        int amountOfHigherCustomer = 0;
+        allCustomer.toFirst();
+        while(allCustomer.hasAccess()){
+            if(!allCustomer.getContent().isGreater(new Customer(name))){
+                allCustomer.remove();
+            }else{
+                amountOfHigherCustomer++;
+                allCustomer.next();
+            }
+        }
+        allCustomer.toFirst();
+
+        String[][] output = new String[amountOfHigherCustomer][2];
+        for(int i = 0; i < amountOfHigherCustomer; i++){
+            output[i] = new String[] {allCustomer.getContent().getName() , String.valueOf(allCustomer.getContent().getSales())};
+            allCustomer.next();
+        }
+
         return output;
     }
 
-    private Customer[] listUpperNameRec(BinarySearchTree<Customer> tree, String name){
-        if(tree.isEmpty()) return  null;
-        Customer[] leftCustomer = listUpperNameRec(tree.getLeftTree(), name);
-        Customer[] rightCustomer = listUpperNameRec(tree.getRightTree(), name);
-        int n = 0;
-        if(tree.getContent().getName().equals(name)){
-            n++;
-        }
-        if(leftCustomer != null){
-            n = n + leftCustomer.length;
-        }
+    private List<Customer> creatList(BinarySearchTree tree){
+        List list = new List();
+
+        if(tree.isEmpty()) return list;
+
+        list.concat(creatList(tree.getLeftTree()));
+        list.append(tree.getContent());
+        list.concat(creatList(tree.getRightTree()));
+
+        return list;
     }
+
 
     /**
      * Methode wartet darauf, von der Lehrkraft beschrieben zu werden.
      */
     public void surprise(){
-        surpriseIsSet = !surpriseIsSet;
+        surpriseIsSet =! surpriseIsSet;
         //TODO 12: "Something big is coming!"
     }
 }
